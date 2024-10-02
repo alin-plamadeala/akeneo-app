@@ -16,9 +16,17 @@ services:
     user: "${DEV_UID:-1000}:${DEV_GID:-1000}"
     restart: unless-stopped
     ports:
-      - "8081:80"
+      - "80:80"
     networks:
       - default
-
+  ngrok:
+    image: ngrok/ngrok:latest
+    command:
+      - "http"
+      - "http://host.docker.internal:80"
+    environment:
+      NGROK_AUTHTOKEN: <YOUR TOKEN HERE>
+    ports:
+      - 4040:4040
 networks:
   default: ~
